@@ -1,0 +1,86 @@
+CREATE TABLE IF NOT EXISTS assessdb.rawdatetime001 (
+  id            string,
+  datetimes     string,
+  monthname     string,
+  yearnumber    string,
+  monthnumber   string,
+  daynumber     string,
+  hournumber    string,
+  minutenumber  string,
+  ampm          string
+)
+
+INSERT INTO TABLE assessdb.rawdatetime001
+SELECT id, datetimes, monthname, yeartimes, monthnumber; daynumber, hournumber, minutenumber, ampm
+FROM retrivedb.rawdatetime;
+WHERE id <> '"id"';
+
+CREATE TABLE IF NOT EXISTS assessdb.rawdatetime002 (
+  id            string,
+  datetimes     string,
+  monthname     string,
+  yearnumber    string,
+  monthnumber   string,
+  daynumber     string,
+  hournumber    string,
+  minutenumber  string,
+  ampm          string
+)
+
+INSERT INTO TABLE assessdb.rawdatetime002
+SELECT id, datetimes, monthname, yeartimes, monthnumber; daynumber, hournumber, minutenumber, ampm
+SELECT CAST(id as INT), CASt(datetimes as timestamp),CAST (yearnumber as INT),CAST (monthnumber as INT), CAST (daynumber as INT),CAST (hournumber as INT),CAST (minutenumber as INT),SUBSTRING(datetimes,2,LENGTH(datetimes)-2), SUBSTRING(ampm,2,LENGTH(ampm)-2) 
+FROM assessdb.rawdatetime001;
+
+CREATE TABLE IF NOT EXISTS assessdb.rawdatetime(
+  id            int,
+  datetimes     timestamp,
+  monthname     string,
+  yearnumber    INT,
+  monthnumber   INT,
+  daynumber     INT,
+  hournumber    INT,
+  minutenumber  INT,
+  ampm          string
+)
+
+INSERT INTO TABLE assessdb.rawdatetime
+SELECT id, datetimes, monthname, yeartimes, monthnumber; daynumber, hournumber, minutenumber, ampm
+SELECT *
+FROM assessdb.rawdatetime002;
+
+
+CREATE TABLE IF NOT EXISTS assessdb.rawaccount001 (
+  id         string,
+  pid        string,
+  accountno  string,
+  balance    string
+)
+
+INSERT INTO TABLE assessdb.rawaccount001
+SELECT id, pid,accountno,balance
+FROM retrivedb.rawaccount;
+WHERE id <> '"id"';
+
+CREATE TABLE IF NOT EXISTS assessdb.rawaccount002 (
+  id         string,
+  pid        string,
+  accountno  string,
+  balance    string
+)
+
+INSERT INTO TABLE assessdb.rawaccount002
+SELECT id, pid,accountno,balance
+SELECT CAST(id as INT), CAST (pid as INT), CAST (accountno as INT) CAST (balance as DECIMAL(18, 9))
+FROM assessdb.rawaccount001;
+
+CREATE TABLE IF NOT EXISTS assessdb.rawaccount(
+  id         INT,
+  pid       INT,
+  accountno  INT,
+  balance  DECIMAL(18, 9)
+)
+
+INSERT INTO TABLE assessdb.rawaccount
+SELECT id, pid,accountno,balance
+FROM assessdb.rawaccount002;
