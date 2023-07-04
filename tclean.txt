@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS assessdb.rawdatetime001 (
   ampm          string
 )
 
-INSERT INTO TABLE assessdb.rawdatetime001
+INSERT INTO TABLE assessdb.datetime001
 SELECT id, datetimes, monthname, yeartimes, monthnumber; daynumber, hournumber, minutenumber, ampm
 FROM retrivedb.rawdatetime;
 WHERE id <> '"id"';
